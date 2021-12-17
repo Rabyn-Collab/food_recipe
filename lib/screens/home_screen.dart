@@ -49,10 +49,11 @@ class HomeScreen extends StatelessWidget {
             final pasta = ref.watch(data2Provider);
             final pork = ref.watch(data3Provider);
             final seafood = ref.watch(data4Provider);
+            final str = ref.watch(dataStream);
             return TabBarView(
                 children: [
                   FoodScreen(
-                    data: chicken,
+                    data: str,
                   ),
                   FoodScreen(
                     data: pasta,

@@ -10,8 +10,20 @@ final data1Provider = FutureProvider((ref) => FoodFetch().getChicken());
 final data2Provider = FutureProvider((ref) => FoodFetch().getPasta());
 final data3Provider = FutureProvider((ref) => FoodFetch().getPork());
 final data4Provider = FutureProvider((ref) => FoodFetch().getSeafood());
+final dataStream = StreamProvider((ref) => FoodFetch().getData());
 
 class FoodFetch{
+
+
+
+  Stream<List<Food>> getData() async*{
+    while(true){
+     Future.delayed(Duration(milliseconds: 500));
+     final data = await getChicken();
+     yield data;
+    }
+
+  }
 
 
  Future<List<Food>> getChicken() async{

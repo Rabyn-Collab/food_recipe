@@ -42,7 +42,9 @@ FoodScreen({this.data});
                             ),
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
-                                child: CachedNetworkImage(imageUrl: food.imageUrl, fit: BoxFit.cover,))),
+                                child: Hero(
+                                    tag: food.imageUrl,
+                                    child: CachedNetworkImage(imageUrl: food.imageUrl, fit: BoxFit.cover,)))),
                       ),
                     ],
                   );

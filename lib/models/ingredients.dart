@@ -1,7 +1,6 @@
 
 
 
-
 class Ingredients{
  final String s1;
  final String s2;

@@ -17,7 +17,11 @@ class FoodDetail extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(food.foodName, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),textAlign: TextAlign.center,),
             ),
-
+           Container(
+             child: Hero(
+                 tag: food.imageUrl,
+                 child: Image.network(food.imageUrl)),
+           ),
           Padding(
             padding: const EdgeInsets.only(left: 5),
             child: Text('Making Instructions:', style: TextStyle(fontSize: 18),),

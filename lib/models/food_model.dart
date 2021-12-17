@@ -26,10 +26,8 @@ class Food{
       id: json['id'] ,
       foodName: json['foodName'] ,
       videoUrl: json['videoUrl'] ,
-    ingredients: Ingredients.fromJson(json['ingredients']),
+     ingredients:  Ingredients.fromJson(json['ingredients']),
       instructions: json['instructions']
-
-
     );
   }
 
