@@ -45,29 +45,20 @@ class HomeScreen extends StatelessWidget {
         ),
         body: Consumer(
           builder: (context, ref, child) {
-            final chicken = ref.watch(data1Provider);
-            final pasta = ref.watch(data2Provider);
-            final pork = ref.watch(data3Provider);
-            final seafood = ref.watch(data4Provider);
-            final str = ref.watch(dataStream);
+            final chicken = ref.watch(chickenProvider);
+            final pork = ref.watch(porkProvider);
+            final pasta = ref.watch(pastaProvider);
+            final seaFood = ref.watch(seaFoodProvider);
             return TabBarView(
                 children: [
-                  FoodScreen(
-                    data: str,
-                  ),
-                  FoodScreen(
-                    data: pasta,
-                  ),
-                  FoodScreen(
-                    data: pork,
-                  ),
-                  FoodScreen(
-                    data: seafood,
-                  ),
+                  FoodScreen(chicken),
+                  FoodScreen(pasta),
+                  FoodScreen(pork),
+                  FoodScreen(seaFood),
                 ]
             );
           }
-        ),
+        )
       ),
     );
   }

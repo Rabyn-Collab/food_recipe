@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:food_recipe/screens/crud_screen.dart';
+import 'package:get/get.dart';
 
 
 
@@ -9,21 +11,23 @@ class DrawerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
-        color: Colors.white70,
-        child: ListView(
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.orange
-              ),
-                child: Center(child: Text('Welcome to Food Land', style: TextStyle(fontSize: 20, color: Colors.white),))
-            ),
-            ListTile(
-              leading: ImageIcon(AssetImage('assets/seafood.png')),
-              title: Text('foods settings'),
-            ),
-          ],
-        ),
+       child: Column(
+         children: [
+         DrawerHeader(
+           decoration: BoxDecoration(
+             color: Colors.deepOrange
+           ),
+             child: Center(child: Text('Food Recipe'))
+         ),
+          ListTile(
+            onTap: (){
+              Get.to(() => CrudScreen(), transition: Transition.leftToRight);
+            },
+            leading: ImageIcon(AssetImage('assets/seafood.png')),
+            title: Text('Food setting'),
+          )
+         ],
+       ),
       ),
     );
   }

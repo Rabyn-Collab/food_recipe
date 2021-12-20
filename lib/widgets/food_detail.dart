@@ -17,11 +17,6 @@ class FoodDetail extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(food.foodName, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),textAlign: TextAlign.center,),
             ),
-           Container(
-             child: Hero(
-                 tag: food.imageUrl,
-                 child: Image.network(food.imageUrl)),
-           ),
           Padding(
             padding: const EdgeInsets.only(left: 5),
             child: Text('Making Instructions:', style: TextStyle(fontSize: 18),),
@@ -67,10 +62,15 @@ class FoodDetail extends StatelessWidget {
     );
   }
   Container _buildText(String label, String nums) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      child: Text('$nums. $label', style: TextStyle(fontSize: 16, color: Colors.pink),),
-    );
+    if(label.isEmpty){
+      return Container();
+    }else{
+      return Container(
+        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        child: Text('$nums. $label', style: TextStyle(fontSize: 16, color: Colors.pink),),
+      );
+    }
+
   }
 
 }

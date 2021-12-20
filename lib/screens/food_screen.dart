@@ -9,12 +9,14 @@ import 'package:get/get.dart';
 
 class FoodScreen extends StatelessWidget {
 final AsyncValue<List<Food>> data;
+FoodScreen(this.data);
 
-FoodScreen({this.data});
+
+
 
   @override
   Widget build(BuildContext context) {
-    return data.when(
+    return  data.when(
         data: (data){
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -42,9 +44,7 @@ FoodScreen({this.data});
                             ),
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
-                                child: Hero(
-                                    tag: food.imageUrl,
-                                    child: CachedNetworkImage(imageUrl: food.imageUrl, fit: BoxFit.cover,)))),
+                                child: CachedNetworkImage(imageUrl: food.imageUrl, fit: BoxFit.cover,))),
                       ),
                     ],
                   );
