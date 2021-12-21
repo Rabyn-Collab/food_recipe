@@ -69,11 +69,8 @@ class AllDataProvider extends StateNotifier<List<List<Food>>>{
     getData();
   }
 
-
   Future<void> getData() async{
-
    try{
-
     final responses =  await Future.wait([
       http.get(Uri.parse(Api.getChicken)),
       http.get(Uri.parse(Api.getPasta)),

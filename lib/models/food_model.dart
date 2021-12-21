@@ -32,6 +32,15 @@ class Food{
   }
 
 
-
+Map<String, dynamic> toJson(){
+    return {
+      'imageUrl':  this.imageUrl,
+      'id': this.id ,
+      'foodName': this.foodName ,
+      'videoUrl': this.videoUrl ,
+      'ingredients':  this.ingredients.toJson(),
+      'instructions': this.instructions
+    };
+}
 
 }
