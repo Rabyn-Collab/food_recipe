@@ -11,9 +11,6 @@ class FoodScreen extends StatelessWidget {
 final AsyncValue<List<Food>> data;
 FoodScreen(this.data);
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return  data.when(
@@ -36,7 +33,7 @@ FoodScreen(this.data);
                       SizedBox(height: 10,),
                       InkWell(
                         onTap: (){
-                          Get.to(() => FoodDetail(food), transition: Transition.leftToRight);
+                          Get.to(() => FoodDetail(food), transition: Transition.leftToRight, opaque: true);
                         },
                         child: Card(
                             shape: RoundedRectangleBorder(

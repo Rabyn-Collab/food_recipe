@@ -1,18 +1,19 @@
 import 'dart:convert';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_recipe/api.dart';
 import 'package:food_recipe/models/food_model.dart';
 import 'package:http/http.dart' as http;
 
 
-final chickenProvider = FutureProvider((ref) => FoodProvider().getChicken());
-final pastaProvider = FutureProvider((ref) => FoodProvider().getPasta());
-final porkProvider = FutureProvider((ref) => FoodProvider().getPork());
-final seaFoodProvider = FutureProvider((ref) => FoodProvider().getSeaFood());
+final chickenProvider = FutureProvider.autoDispose((ref) => FoodProvider().getChicken());
+final pastaProvider = FutureProvider.autoDispose((ref) => FoodProvider().getPasta());
+final porkProvider = FutureProvider.autoDispose((ref) => FoodProvider().getPork());
+final seaFoodProvider = FutureProvider.autoDispose((ref) => FoodProvider().getSeaFood());
+final foodProvider = Provider((ref) => FoodProvider());
 
 
 class FoodProvider{
+
 
   Future<List<Food>> getChicken () async{
     try{
@@ -62,42 +63,51 @@ class FoodProvider{
 
 
 
+
 final allDataProvider = StateNotifierProvider<AllDataProvider, List<List<Food>>>((ref) => AllDataProvider());
-
+//final streamAllData = StreamProvider((ref) => AllDataProvider().streamData());
 class AllDataProvider extends StateNotifier<List<List<Food>>>{
+
   AllDataProvider() : super([]){
-    getData();
+    getAllData();
   }
 
-  Future<void> getData() async{
-   try{
-    final responses =  await Future.wait([
-      http.get(Uri.parse(Api.getChicken)),
-      http.get(Uri.parse(Api.getPasta)),
-      http.get(Uri.parse(Api.getPork)),
-      http.get(Uri.parse(Api.getSeafood))
-    ]);
 
-    List<Food> data = (jsonDecode(responses[0].body) as List).map((e) => Food.fromJson(e) ).toList();
-    List<Food> data1 = (jsonDecode(responses[1].body) as List).map((e) => Food.fromJson(e) ).toList();
-    List<Food> data2 = (jsonDecode(responses[2].body ) as List).map((e) => Food.fromJson(e) ).toList();
-    List<Food> data3 = (jsonDecode(responses[3].body)  as List).map((e) => Food.fromJson(e) ).toList();
+  // Stream<List<List<Food>>> streamData() async*{
+  //     while(true){
+  //       final data = await getAllData();
+  //       Future.delayed(Duration(seconds: 2));
+  //        yield data;
+  //     }
+  //
+  // }
+  Future<void> getAllData() async{
 
-    state.add(data);
-    state.add(data1);
-    state.add(data2);
-    state.add(data3);
+   final responses = await Future.wait([
+     http.get(Uri.parse(Api.getChicken)),
+     http.get(Uri.parse(Api.getPasta)),
+     http.get(Uri.parse(Api.getPork)),
+     http.get(Uri.parse(Api.getSeafood)),
+   ]);
 
-   }catch(err){
-     throw err;
-   }
+
+   List<Food> data = ( jsonDecode(responses[0].body) as List).map((e) => Food.fromJson(e)).toList();
+   List<Food> data1 = ( jsonDecode(responses[1].body) as List).map((e) => Food.fromJson(e)).toList();
+   List<Food> data2 = ( jsonDecode(responses[2].body) as List).map((e) => Food.fromJson(e)).toList();
+   List<Food> data3 = ( jsonDecode(responses[3].body) as List).map((e) => Food.fromJson(e)).toList();
+
+   state = [data,data1, data2, data3];
+   // state.add(data);
+   // state.add(data1);
+   // state.add(data2);
+   // state.add(data3);
+
 
   }
+
+
 
 }
-
-
-
 
 
 

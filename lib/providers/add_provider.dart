@@ -1,27 +1,26 @@
 import 'dart:convert';
-import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_recipe/models/food_model.dart';
-import 'package:food_recipe/widgets/custom_progress_dialog.dart';
 import 'package:http/http.dart' as http;
 
 
 
-final crudProvider = Provider((ref) => CrudProvider());
-
-
-class CrudProvider{
+final addProvider = Provider((ref) => AddProvider());
 
 
 
-  Future upDateData(String id, String label, Food food, BuildContext context, Map ingre) async{
-final bar = CustomProgressBar.getBar(context);
+class AddProvider{
+
+
+  Future<void> addData( String label, Food food, BuildContext context, Map ingre) async{
+
     if(label == 'Chicken'){
-      final url = 'https://61b33c1faf5ff70017ca1d66.mockapi.io/chicken/$id';
-  bar.show();
+      final url = 'https://61b33c1faf5ff70017ca1d66.mockapi.io/chicken';
+
       try{
-        final response = await http.patch(Uri.parse(url), body: jsonEncode({
+        final response = await http.post(Uri.parse(url), body: jsonEncode({
           'imageUrl':  food.imageUrl,
           'id': food.id ,
           'foodName': food.foodName ,
@@ -32,20 +31,15 @@ final bar = CustomProgressBar.getBar(context);
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },);
-
-        if(response.statusCode == 200){
-          await  CustomProgressBar.dismissBar(bar);
-          return 'Success';
-        }
         print(response.statusCode);
       }catch(err){
-           return '';
+
       }
 
     }else if(label == 'Pork'){
-      final url = 'https://61b33c1faf5ff70017ca1d66.mockapi.io/pork/$id';
+      final url = 'https://61b33c1faf5ff70017ca1d66.mockapi.io/pork';
       try{
-        final response = await http.patch(Uri.parse(url), body: jsonEncode({
+        final response = await http.post(Uri.parse(url), body: jsonEncode({
           'imageUrl':  food.imageUrl,
           'id': food.id ,
           'foodName': food.foodName ,
@@ -64,9 +58,9 @@ final bar = CustomProgressBar.getBar(context);
 
     }else if(label == 'Pasta'){
 
-      final url = 'https://61b33c1faf5ff70017ca1d66.mockapi.io/pasta/$id';
+      final url = 'https://61b33c1faf5ff70017ca1d66.mockapi.io/pasta';
       try{
-        final response = await http.patch(Uri.parse(url), body: jsonEncode({
+        final response = await http.post(Uri.parse(url), body: jsonEncode({
           'imageUrl':  food.imageUrl,
           'id': food.id ,
           'foodName': food.foodName ,
@@ -84,10 +78,10 @@ final bar = CustomProgressBar.getBar(context);
       }
 
     }else{
-      final url = 'https://61b33c1faf5ff70017ca1d66.mockapi.io/seafood/$id';
+      final url = 'https://61b33c1faf5ff70017ca1d66.mockapi.io/seafood';
       try{
 
-        final response = await http.patch(Uri.parse(url), body: jsonEncode({
+        final response = await http.post(Uri.parse(url), body: jsonEncode({
           'imageUrl':  food.imageUrl,
           'id': food.id ,
           'foodName': food.foodName ,

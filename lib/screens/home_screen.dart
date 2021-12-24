@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:food_recipe/models/food_model.dart';
 import 'package:food_recipe/providers/food_provider.dart';
 import 'package:food_recipe/screens/food_screen.dart';
 import 'package:food_recipe/widgets/drawer_widget.dart';
@@ -7,7 +9,15 @@ import 'package:food_recipe/widgets/drawer_widget.dart';
 
 
 
+
+
+
 class HomeScreen extends StatelessWidget {
+
+ Future<void> getRefreshData(WidgetRef ref, provider) async{
+    ref.refresh(provider);
+ }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -49,12 +59,21 @@ class HomeScreen extends StatelessWidget {
             final pork = ref.watch(porkProvider);
             final pasta = ref.watch(pastaProvider);
             final seaFood = ref.watch(seaFoodProvider);
+          //  final allData = ref.watch(streamAllData);
             return TabBarView(
                 children: [
-                  FoodScreen(chicken),
-                  FoodScreen(pasta),
-                  FoodScreen(pork),
-                  FoodScreen(seaFood),
+                  RefreshIndicator(
+                      onRefresh: () => getRefreshData(ref, chickenProvider),
+                      child: FoodScreen(chicken)),
+                  RefreshIndicator(
+                      onRefresh: () => getRefreshData(ref, pastaProvider),
+                      child: FoodScreen(pasta)),
+                  RefreshIndicator(
+                      onRefresh: () => getRefreshData(ref, porkProvider),
+                      child: FoodScreen(pork)),
+                  RefreshIndicator(
+                      onRefresh: () => getRefreshData(ref, seaFoodProvider),
+                      child: FoodScreen(seaFood)),
                 ]
             );
           }

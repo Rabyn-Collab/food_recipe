@@ -1,96 +1,128 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_recipe/models/food_model.dart';
+import 'package:food_recipe/models/ingredients.dart';
 import 'package:food_recipe/providers/crud_provider.dart';
-
-
-
+import 'package:food_recipe/providers/food_provider.dart';
+import 'package:food_recipe/screens/home_screen.dart';
+import 'package:get/get.dart';
 
 class EditForm extends StatelessWidget {
+  final Food food;
+  final String label;
+  EditForm(this.food, this.label);
 
- final Food food;
- final String label;
- EditForm(this.food, this.label);
-
- final _form = GlobalKey<FormState>();
-
- final foodController = TextEditingController();
- final ingredientsController = TextEditingController();
- final instructionController = TextEditingController();
- final videoController = TextEditingController();
- final imageController = TextEditingController();
+  final foodController = TextEditingController();
+  final instructionController = TextEditingController();
+  final imageController = TextEditingController();
+  final videoController = TextEditingController();
+  final ingre1Controller = TextEditingController();
+  final ingre2Controller = TextEditingController();
+  final ingre3Controller = TextEditingController();
+  final ingre4Controller = TextEditingController();
+  final ingre5Controller = TextEditingController();
+  final ingre6Controller = TextEditingController();
+  final ingre7Controller = TextEditingController();
+  final _form = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.deepOrange,
-        title: Text('Customize meal'),
-      ),
-        body: Form(
-          key: _form,
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                   TextFormField(
-                     controller: foodController..text = food.foodName,
-                     decoration: InputDecoration(
-                       label: Text('foodName')
-                     ),
-                   ),
-                   SizedBox(height: 10,),
-                  TextFormField(
-                    controller:  instructionController..text = food.instructions,
-                    decoration: InputDecoration(
-                        label: Text('instruction')
+        appBar: AppBar(
+          backgroundColor: Colors.deepOrangeAccent,
+          title: Text('Update Items'),
+        ),
+        body: SingleChildScrollView(
+          child: Form(
+            key: _form,
+            child: Card(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: foodController..text = food.foodName,
+                      decoration: InputDecoration(
+                          label: Text('FoodName')),
                     ),
-                  ),
-                  SizedBox(height: 10,),
-                  TextFormField(
-                    controller: imageController..text = food.imageUrl,
-                    decoration: InputDecoration(
-                        label: Text('imageUrl')
+                    TextFormField(
+                      controller: instructionController
+                        ..text = food.instructions,
+                      decoration: InputDecoration(label: Text('Instruction')),
                     ),
-                  ),
-                  SizedBox(height: 10,),
-                  TextFormField(
-                    controller: videoController..text = food.videoUrl,
-                    decoration: InputDecoration(
-                        label: Text('videoUrl')
+                    TextFormField(
+                      controller: imageController..text = food.imageUrl,
+                      decoration: InputDecoration(label: Text('ImageUrl')),
                     ),
-                  ),
-                  SizedBox(height: 20,),
+                    TextFormField(
+                      controller: videoController..text = food.videoUrl,
+                      decoration: InputDecoration(label: Text('VideoUrl')),
+                    ),
+                    _buildTextFormField('ingre1', ingre1Controller, food.ingredients.s1),
+                    _buildTextFormField('ingre2', ingre2Controller, food.ingredients.s2),
+                    _buildTextFormField('ingre3', ingre3Controller, food.ingredients.s3),
+                    _buildTextFormField('ingre4', ingre4Controller, food.ingredients.s4),
+                    _buildTextFormField('ingre5', ingre5Controller, food.ingredients.s5),
+                    _buildTextFormField('ingre6', ingre6Controller, food.ingredients.s6),
+                    _buildTextFormField('ingre7', ingre7Controller, food.ingredients.s7),
 
-                  Consumer(
-                    builder: (context, ref, child) {
-                      return ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              minimumSize: Size(150, 38)
-                          ),
-                          onPressed: () {
-                            _form.currentState.save();
-                            final newFood = Food(
-                                foodName: foodController.text.trim(),
-                                id: foodController.text.trim(),
-                                imageUrl: imageController.text.trim(),
-                                ingredients: food.ingredients,
-                                instructions: instructionController.text.trim(),
-                                videoUrl: videoController.text.trim()
-                            );
-                            ref.read(crudProvider).upDateData(food.id, label, newFood);
-                          },
-                          child: Text('update', style: TextStyle(fontSize: 18),)
-                      );
-                    }
-                  )
-                ],
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Consumer(
+                      builder: (context, ref, child) {
+                        return ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                minimumSize: Size(200, 50)),
+                            onPressed: () async {
+                              _form.currentState.save();
+                              if (_form.currentState.validate()) {
+                                _form.currentState.save();
+                                final ingre = {
+                                  '1': ingre1Controller.text.trim(),
+                                  '2': ingre2Controller.text.trim(),
+                                  '3': ingre3Controller.text.trim(),
+                                  '4': ingre4Controller.text.trim(),
+                                  '5': ingre5Controller.text.trim(),
+                                  '6': ingre6Controller.text.trim(),
+                                  '7': ingre7Controller.text.trim(),
+                                };
+                                final newFood = Food(
+                                    foodName: foodController.text.trim(),
+                                    id: foodController.text.trim(),
+                                    imageUrl: imageController.text.trim(),
+                                    instructions: instructionController.text
+                                        .trim(),
+                                    videoUrl: videoController.text.trim()
+                                );
+                       final msg =    await ref.read(crudProvider).upDateData(
+                                    food.id, label, newFood, context, ingre);
+                       if(msg == 'Success'){
+                         ref.refresh(allDataProvider);
+                         Get.offAll(() => HomeScreen(), transition: Transition.leftToRight);
+                       }
+
+                              }
+                            },
+                            child: Text('Submit'));
+                      }
+                    )
+                  ],
+                ),
               ),
             ),
           ),
-        )
+        ));
+  }
+
+  TextFormField _buildTextFormField(String label, TextEditingController controller, String ingre) {
+    return TextFormField(
+      controller: controller..text = ingre,
+      decoration: InputDecoration(label: Text(label)),
     );
   }
+
+
 }
