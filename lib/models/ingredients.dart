@@ -2,13 +2,13 @@
 
 
 class Ingredients{
- final String s1;
- final String s2;
- final String s3;
- final String s4;
- final String s5;
- final String s6;
- final String s7;
+ final String? s1;
+ final String? s2;
+ final String? s3;
+ final String? s4;
+ final String? s5;
+ final String? s6;
+ final String? s7;
 
 
   Ingredients({

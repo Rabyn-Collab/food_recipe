@@ -76,9 +76,9 @@ class AddForm extends StatelessWidget {
                               style: ElevatedButton.styleFrom(
                                   minimumSize: Size(200, 50)),
                               onPressed: () async {
-                                _form.currentState.save();
-                                if (_form.currentState.validate()) {
-                                  _form.currentState.save();
+                                _form.currentState!.save();
+                                if (_form.currentState!.validate()) {
+                                  _form.currentState!.save();
                                   final ingre = {
                                     '1': ingre1Controller.text.trim(),
                                     '2': ingre2Controller.text.trim(),
@@ -99,6 +99,10 @@ class AddForm extends StatelessWidget {
                                   await ref.read(addProvider).addData(
                                       label, newFood, context, ingre);
                                   ref.refresh(allDataProvider);
+                                  ref.refresh(chickenProvider);
+                                  ref.refresh(porkProvider);
+                                  ref.refresh(seaFoodProvider);
+                                  ref.refresh(pastaProvider);
                                   Get.offAll(() => HomeScreen(), transition: Transition.leftToRight);
                                 }
                               },

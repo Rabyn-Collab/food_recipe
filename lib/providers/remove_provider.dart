@@ -14,7 +14,7 @@ final removeProvider = Provider((ref) => RemoveProvider());
 class RemoveProvider{
 
 
-  Future<void>  removeData(String id,  String label, BuildContext context) async{
+  Future<void>  removeData(String? id,  String label, BuildContext context) async{
 
     if(label == 'Chicken'){
       final url = 'https://61b33c1faf5ff70017ca1d66.mockapi.io/chicken/$id';

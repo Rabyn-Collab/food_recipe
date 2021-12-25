@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_recipe/models/food_model.dart';
-import 'package:food_recipe/models/ingredients.dart';
 import 'package:food_recipe/widgets/food_detail.dart';
 import 'package:get/get.dart';
 
@@ -29,7 +28,7 @@ FoodScreen(this.data);
                   final food = data[index];
                   return Column(
                     children: [
-                      Text(food.foodName, style: TextStyle(fontSize: 17, ), overflow: TextOverflow.ellipsis,),
+                      Text(food.foodName!, style: TextStyle(fontSize: 17, ), overflow: TextOverflow.ellipsis,),
                       SizedBox(height: 10,),
                       InkWell(
                         onTap: (){
@@ -41,7 +40,7 @@ FoodScreen(this.data);
                             ),
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
-                                child: CachedNetworkImage(imageUrl: food.imageUrl, fit: BoxFit.cover,))),
+                                child: CachedNetworkImage(imageUrl: food.imageUrl!, fit: BoxFit.cover,))),
                       ),
                     ],
                   );

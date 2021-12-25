@@ -15,7 +15,7 @@ class CrudProvider{
 
 
 
-  Future upDateData(String id, String label, Food food, BuildContext context, Map ingre) async{
+  Future upDateData(String? id, String label, Food food, BuildContext context, Map ingre) async{
 final bar = CustomProgressBar.getBar(context);
     if(label == 'Chicken'){
       final url = 'https://61b33c1faf5ff70017ca1d66.mockapi.io/chicken/$id';

@@ -9,13 +9,13 @@ class FoodDetail extends StatelessWidget {
   FoodDetail(this.food);
   @override
   Widget build(BuildContext context) {
-    final videoId = YoutubePlayer.convertUrlToId(food.videoUrl);
+    final videoId = YoutubePlayer.convertUrlToId(food.videoUrl!)!;
     return Scaffold(
         body: ListView(
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(food.foodName, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),textAlign: TextAlign.center,),
+              child: Text(food.foodName!, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),textAlign: TextAlign.center,),
             ),
           Padding(
             padding: const EdgeInsets.only(left: 5),
@@ -27,7 +27,7 @@ class FoodDetail extends StatelessWidget {
              width: double.infinity,
              child: Card(
                child: SingleChildScrollView(
-                 child: Text(food.instructions, style: TextStyle(fontSize: 15, wordSpacing: 3, letterSpacing: 1),
+                 child: Text(food.instructions!, style: TextStyle(fontSize: 15, wordSpacing: 3, letterSpacing: 1),
                  textAlign: TextAlign.justify,
                  ),
                ),
@@ -39,13 +39,13 @@ class FoodDetail extends StatelessWidget {
               child: Text('Ingredients:', style: TextStyle(fontSize: 18),),
             ),
 
-            _buildText(food.ingredients.s1, '1'),
-            _buildText(food.ingredients.s2, '2'),
-            _buildText(food.ingredients.s3, '3'),
-            _buildText(food.ingredients.s4, '4'),
-            _buildText(food.ingredients.s5, '5'),
-            _buildText(food.ingredients.s6, '6'),
-            _buildText(food.ingredients.s7, '7'),
+            _buildText(food.ingredients!.s1!, '1'),
+            _buildText(food.ingredients!.s2!, '2'),
+            _buildText(food.ingredients!.s3!, '3'),
+            _buildText(food.ingredients!.s4!, '4'),
+            _buildText(food.ingredients!.s5!, '5'),
+            _buildText(food.ingredients!.s6!, '6'),
+            _buildText(food.ingredients!.s7!, '7'),
 
             YoutubePlayer(
                   controller: YoutubePlayerController(

@@ -5,10 +5,10 @@ import 'package:food_recipe/models/food_model.dart';
 import 'package:http/http.dart' as http;
 
 
-final chickenProvider = FutureProvider.autoDispose((ref) => FoodProvider().getChicken());
-final pastaProvider = FutureProvider.autoDispose((ref) => FoodProvider().getPasta());
-final porkProvider = FutureProvider.autoDispose((ref) => FoodProvider().getPork());
-final seaFoodProvider = FutureProvider.autoDispose((ref) => FoodProvider().getSeaFood());
+final FutureProvider<List<Food>> chickenProvider = FutureProvider((ref) => FoodProvider().getChicken());
+final FutureProvider<List<Food>> pastaProvider = FutureProvider((ref) => FoodProvider().getPasta());
+final FutureProvider<List<Food>> porkProvider = FutureProvider((ref) => FoodProvider().getPork());
+final FutureProvider<List<Food>> seaFoodProvider = FutureProvider((ref) => FoodProvider().getSeaFood());
 final foodProvider = Provider((ref) => FoodProvider());
 
 

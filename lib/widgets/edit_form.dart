@@ -43,30 +43,30 @@ class EditForm extends StatelessWidget {
                 child: Column(
                   children: [
                     TextFormField(
-                      controller: foodController..text = food.foodName,
+                      controller: foodController..text = food.foodName!,
                       decoration: InputDecoration(
                           label: Text('FoodName')),
                     ),
                     TextFormField(
                       controller: instructionController
-                        ..text = food.instructions,
+                        ..text = food.instructions!,
                       decoration: InputDecoration(label: Text('Instruction')),
                     ),
                     TextFormField(
-                      controller: imageController..text = food.imageUrl,
+                      controller: imageController..text = food.imageUrl!,
                       decoration: InputDecoration(label: Text('ImageUrl')),
                     ),
                     TextFormField(
-                      controller: videoController..text = food.videoUrl,
+                      controller: videoController..text = food.videoUrl!,
                       decoration: InputDecoration(label: Text('VideoUrl')),
                     ),
-                    _buildTextFormField('ingre1', ingre1Controller, food.ingredients.s1),
-                    _buildTextFormField('ingre2', ingre2Controller, food.ingredients.s2),
-                    _buildTextFormField('ingre3', ingre3Controller, food.ingredients.s3),
-                    _buildTextFormField('ingre4', ingre4Controller, food.ingredients.s4),
-                    _buildTextFormField('ingre5', ingre5Controller, food.ingredients.s5),
-                    _buildTextFormField('ingre6', ingre6Controller, food.ingredients.s6),
-                    _buildTextFormField('ingre7', ingre7Controller, food.ingredients.s7),
+                    _buildTextFormField('ingre1', ingre1Controller, food.ingredients!.s1!),
+                    _buildTextFormField('ingre2', ingre2Controller, food.ingredients!.s2!),
+                    _buildTextFormField('ingre3', ingre3Controller, food.ingredients!.s3!),
+                    _buildTextFormField('ingre4', ingre4Controller, food.ingredients!.s4!),
+                    _buildTextFormField('ingre5', ingre5Controller, food.ingredients!.s5!),
+                    _buildTextFormField('ingre6', ingre6Controller, food.ingredients!.s6!),
+                    _buildTextFormField('ingre7', ingre7Controller, food.ingredients!.s7!),
 
                     SizedBox(
                       height: 50,
@@ -77,9 +77,9 @@ class EditForm extends StatelessWidget {
                             style: ElevatedButton.styleFrom(
                                 minimumSize: Size(200, 50)),
                             onPressed: () async {
-                              _form.currentState.save();
-                              if (_form.currentState.validate()) {
-                                _form.currentState.save();
+                              _form.currentState!.save();
+                              if (_form.currentState!.validate()) {
+                                _form.currentState!.save();
                                 final ingre = {
                                   '1': ingre1Controller.text.trim(),
                                   '2': ingre2Controller.text.trim(),
@@ -97,10 +97,15 @@ class EditForm extends StatelessWidget {
                                         .trim(),
                                     videoUrl: videoController.text.trim()
                                 );
-                       final msg =    await ref.read(crudProvider).upDateData(
+                        final msg =    await ref.read(crudProvider).upDateData(
                                     food.id, label, newFood, context, ingre);
+                                 ref.refresh(allDataProvider);
+                                 ref.refresh(chickenProvider);
+                                 ref.refresh(porkProvider);
+                                 ref.refresh(seaFoodProvider);
+                                 ref.refresh(pastaProvider);
+
                        if(msg == 'Success'){
-                         ref.refresh(allDataProvider);
                          Get.offAll(() => HomeScreen(), transition: Transition.leftToRight);
                        }
 
